@@ -67,7 +67,7 @@ public class UserDetailsController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
         checkUser.setPassword(user.getPassword());
-        User userUpdate = userDetailsService.saveUserDetails(checkUser);
+        User userUpdate = userDetailsService.updateUserDetails(checkUser);
         if(userUpdate==null){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong while updating password");
         }

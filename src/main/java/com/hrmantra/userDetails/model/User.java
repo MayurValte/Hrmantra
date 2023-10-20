@@ -1,30 +1,20 @@
 package com.hrmantra.userDetails.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "user")
 public class User {
 @Id
-@Column(name = "empid")
-private int empid;
+@Column(name = "id")
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 @Column(name = "firstname")
 private String firstName;
 @Column(name = "lastname")
 private String lastName;
 private String email;
 private String password;
-
-    public User(int empid, String firstName, String lastName, String email, String password) {
-        this.empid = empid;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
@@ -36,12 +26,12 @@ private String password;
     public User() {
     }
 
-    public int getEmpid() {
-        return empid;
+    public Long getEmpid() {
+        return id;
     }
 
-    public void setEmpid(int empid) {
-        this.empid = empid;
+    public void setEmpid(Long empid) {
+        this.id = empid;
     }
 
     public String getFirstName() {
@@ -78,8 +68,8 @@ private String password;
 
     @Override
     public String toString() {
-        return "UserDetails{" +
-                "id=" + empid +
+        return "User{" +
+                "empid=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +

@@ -15,4 +15,6 @@ public interface UserDetailsService {
 
     public List<User> getAllUserDetails();
 
+    public User updateUserDetails(User user);
+
 }

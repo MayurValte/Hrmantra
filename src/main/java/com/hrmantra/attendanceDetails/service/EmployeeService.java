@@ -15,4 +15,9 @@ public interface EmployeeService {
     public Employee updateEmployee(Employee employee);
 
     public Employee getManagerByEmpId(Long empId);
+
+    public List<Long> getListOfAllReportee(Long managerId);
+
+    public List<Employee> getListOfAllReporteeDetails(Long managerId);
+
 }

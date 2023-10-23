@@ -41,4 +41,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> employeeOptional = employeeDao.findById(managerEmpId.getManagerId());
         return employeeOptional.orElse(null);
     }
+
+    @Override
+    public List<Long> getListOfAllReportee(Long managerId) {
+        return employeeDao.findEmpIdsByManagerId(managerId);
+    }
+
+    @Override
+    public List<Employee> getListOfAllReporteeDetails(Long managerId) {
+        return employeeDao.findByManagerId(managerId);
+    }
 }

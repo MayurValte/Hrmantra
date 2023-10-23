@@ -2,11 +2,8 @@ package com.hrmantra.attendanceDetails.controller;
 
 import com.hrmantra.attendanceDetails.model.Employee;
 import com.hrmantra.attendanceDetails.service.EmployeeService;
-import com.hrmantra.userDetails.model.User;
-import com.hrmantra.userDetails.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/hr")
-public class ManagerAssignmentController {
+public class HrManagement {
 
     @Autowired
     private EmployeeService employeeService;

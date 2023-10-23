@@ -6,14 +6,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface EmployeeDao extends JpaRepository<Employee,Long> {
 
         public Employee findByEmailId(@Param("email") String email);
 
-//        @Query("SELECT e.managerid FROM Employee e WHERE e.empid = :empId")
-//        public Long getManagerEmpId(@Param("empId") Long empId);
-
         public  Employee findByEmpId(@Param("empId") Long empId);
+
+        @Query("SELECT e.empId FROM Employee e WHERE e.managerId = :managerId")
+        List<Long> findEmpIdsByManagerId(@Param("managerId") Long managerId);
+
+        List<Employee> findByManagerId(Long ManagerId);
 
 }

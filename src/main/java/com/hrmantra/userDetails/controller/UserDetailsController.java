@@ -2,7 +2,7 @@ package com.hrmantra.userDetails.controller;
 
 import com.hrmantra.userDetails.model.User;
 import com.hrmantra.userDetails.service.EmailService;
-import com.hrmantra.userDetails.service.UserDetailsService;
+import com.hrmantra.userDetails.service.UserServices;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ import java.util.List;
 public class UserDetailsController {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserServices userServices;
 
     @Autowired
     private EmailService emailService;
@@ -28,31 +28,23 @@ public class UserDetailsController {
     @Value("${email.notification.body}")
     private String emailBody;
 
-    @GetMapping("/userLogin")
-    public ResponseEntity<User> userLogin(@RequestParam(name = "username") String username,  @RequestParam(name = "password") String password){
-        User user = userDetailsService.getUserByEmailAndPassword(username, password);
-        if (user!=null)
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }
 
-    @GetMapping("/getAllUsers")
+    @GetMapping("/user/get/getAllUsers")
     public ResponseEntity<List<User>> getAllUserDetails(){
-        List<User> allUserDetails = userDetailsService.getAllUserDetails();
+        List<User> allUserDetails = userServices.getAllUserDetails();
         if(allUserDetails==null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(allUserDetails,HttpStatus.OK);
     }
 
- @PostMapping("/signUp")
+    @PostMapping("/user/post/signUp")
     public ResponseEntity<String> saveUserDetails(@RequestBody User user){
-     User userByEmail = userDetailsService.getUserByEmail(user.getEmail());
-        if (userByEmail!=null){
+     User userByUsername = userServices.getUserByEmail(user.getEmail());
+        if (userByUsername!=null){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User with the same username already exists.");
         }
-     User savedUser = userDetailsService.saveUserDetails(user);
+     User savedUser = userServices.saveUserDetails(user);
      if (savedUser!=null){
          return ResponseEntity.ok("User registered successfully.");
      }else{
@@ -60,14 +52,14 @@ public class UserDetailsController {
      }
  }
 
-    @PutMapping("/forgotPassword")
+    @PutMapping("/user/get/forgotPassword")
     public ResponseEntity<String> updatePassword(@RequestBody User user) throws MessagingException {
-        User checkUser = userDetailsService.getUserByEmail(user.getEmail());
+        User checkUser = userServices.getUserByEmail(user.getEmail());
         if(checkUser==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
         checkUser.setPassword(user.getPassword());
-        User userUpdate = userDetailsService.updateUserDetails(checkUser);
+        User userUpdate = userServices.updateUserDetails(checkUser);
         if(userUpdate==null){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong while updating password");
         }
@@ -80,6 +72,23 @@ public class UserDetailsController {
 
 
         return ResponseEntity.ok("Password updated successful");
+    }
+
+    @GetMapping("/updateRole")
+    public ResponseEntity<String> updateRole(@RequestParam() String empId, @RequestParam() String role){
+        User user = userServices.getUserByEmpId(Long.valueOf(empId));
+        if (user!=null){
+            if(role.startsWith("ROLE_")){
+                user.setRole(role);
+            }else {
+                user.setRole("ROLE_"+role);
+            }
+        }
+        User savedUser = this.userServices.updateRole(user);
+        if(savedUser==null){
+            return new ResponseEntity<>("Couldn't update role", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return ResponseEntity.ok("Successfully updated role");
     }
 
 }

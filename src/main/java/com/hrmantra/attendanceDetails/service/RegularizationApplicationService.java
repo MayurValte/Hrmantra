@@ -1,5 +1,6 @@
 package com.hrmantra.attendanceDetails.service;
 
+import com.hrmantra.attendanceDetails.genericResponse.GenericResponse;
 import com.hrmantra.attendanceDetails.model.RegularizationApplication;
 
 import java.util.Date;

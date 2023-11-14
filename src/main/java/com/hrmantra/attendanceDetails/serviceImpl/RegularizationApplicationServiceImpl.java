@@ -2,6 +2,7 @@ package com.hrmantra.attendanceDetails.serviceImpl;
 
 import com.hrmantra.attendanceDetails.dao.EmployeeDao;
 import com.hrmantra.attendanceDetails.dao.RegularizationApplicationDao;
+import com.hrmantra.attendanceDetails.genericResponse.GenericResponse;
 import com.hrmantra.attendanceDetails.model.Employee;
 import com.hrmantra.attendanceDetails.model.RegularizationApplication;
 import com.hrmantra.attendanceDetails.service.RegularizationApplicationService;
@@ -52,7 +53,6 @@ public class RegularizationApplicationServiceImpl implements RegularizationAppli
 
     @Override
     public RegularizationApplication getRegularizationByEmpIdAndDate(Long empId, Date date) {
-        RegularizationApplication byEmpIdAndDate = regularizationApplicationDao.findByEmpIdAndDate(empId, date);
-        return byEmpIdAndDate;
+        return regularizationApplicationDao.findByEmpIdAndDate(empId, date);
     }
 }

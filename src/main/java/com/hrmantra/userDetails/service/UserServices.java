@@ -5,9 +5,7 @@ import com.hrmantra.userDetails.model.User;
 import java.util.List;
 
 
-public interface UserDetailsService {
-
-    public User getUserByEmailAndPassword(String username, String password);
+public interface UserServices {
 
     public User getUserByEmail(String email);
 
@@ -17,4 +15,10 @@ public interface UserDetailsService {
 
     public User updateUserDetails(User user);
 
+    public User getUserByUsername(String username);
+
+
+    User getUserByEmpId(Long empId);
+
+    User updateRole(User user);
 }

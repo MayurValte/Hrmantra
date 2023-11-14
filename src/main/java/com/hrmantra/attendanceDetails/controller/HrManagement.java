@@ -2,6 +2,8 @@ package com.hrmantra.attendanceDetails.controller;
 
 import com.hrmantra.attendanceDetails.model.Employee;
 import com.hrmantra.attendanceDetails.service.EmployeeService;
+import com.hrmantra.userDetails.model.User;
+import com.hrmantra.userDetails.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,5 +53,4 @@ public class HrManagement {
         return new ResponseEntity<>(managerByEmpId,HttpStatus.OK);
 
     }
-
 }
